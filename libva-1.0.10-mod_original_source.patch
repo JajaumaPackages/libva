@@ -1,0 +1,31 @@
+diff -up libva-1.0.10/configure.ac.mod libva-1.0.10/configure.ac
+--- libva-1.0.10/configure.ac.mod	2011-02-21 09:59:13.532460000 +0100
++++ libva-1.0.10/configure.ac	2011-02-21 09:59:28.435460000 +0100
+@@ -170,14 +170,6 @@ AC_OUTPUT([
+ 	va/egl/Makefile
+ 	va/dummy/Makefile
+ 	dummy_drv_video/Makefile
+-	i965_drv_video/Makefile
+-	i965_drv_video/shaders/Makefile
+-	i965_drv_video/shaders/h264/Makefile
+-	i965_drv_video/shaders/h264/mc/Makefile
+-	i965_drv_video/shaders/mpeg2/Makefile
+-	i965_drv_video/shaders/mpeg2/vld/Makefile
+-	i965_drv_video/shaders/render/Makefile
+-	i965_drv_video/shaders/post_processing/Makefile
+ 	test/Makefile
+ 	test/basic/Makefile
+ 	test/decode/Makefile
+diff -up libva-1.0.10/Makefile.am.mod libva-1.0.10/Makefile.am
+--- libva-1.0.10/Makefile.am.mod	2011-02-21 09:59:36.347460000 +0100
++++ libva-1.0.10/Makefile.am	2011-02-21 10:00:35.950460000 +0100
+@@ -26,9 +26,6 @@ SUBDIRS = va test
+ if BUILD_DUMMY_DRIVER
+ SUBDIRS += dummy_drv_video
+ endif
+-if BUILD_I965_DRIVER
+-SUBDIRS += i965_drv_video
+-endif
+ 
+ pcfiles = libva.pc libva-tpi.pc
+ pcfiles += libva-x11.pc

@@ -1,5 +1,5 @@
 Name:		libva
-Version:	1.0.8
+Version:	1.0.10
 Release:	1%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 Group:		System Environment/Libraries
@@ -88,6 +88,9 @@ rm -rf %{buildroot}
 %{_bindir}/vainfo
 
 %changelog
+* Mon Feb 21 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.0.10-1
+- Update to 1.0.10
+
 * Tue Jan 25 2011 Adam Williamson <awilliam@redhat.com> - 1.0.8-1
 - bump to new version
 - fix modded tarball to actually not have i965 dir
