@@ -1,5 +1,5 @@
 Name:		libva
-Version:	1.0.10
+Version:	1.0.12
 Release:	1%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 Group:		System Environment/Libraries
@@ -88,6 +88,9 @@ rm -rf %{buildroot}
 %{_bindir}/vainfo
 
 %changelog
+* Fri Apr 08 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.0.12-1
+- Update to 1.0.12
+
 * Mon Feb 21 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.0.10-1
 - Update to 1.0.10
 
