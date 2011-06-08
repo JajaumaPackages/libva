@@ -23,6 +23,7 @@ BuildRequires:	libudev-devel
 BuildRequires:	libXext-devel
 BuildRequires:	libXfixes-devel
 BuildRequires:	libdrm-devel
+BuildRequires:  libpciaccess-devel
 BuildRequires:	mesa-libGL-devel
 # owns the %{_libdir}/dri directory
 Requires:	mesa-dri-drivers
