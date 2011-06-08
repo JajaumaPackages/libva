@@ -1,5 +1,5 @@
 Name:		libva
-Version:	1.0.12
+Version:	1.0.13
 Release:	1%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 Group:		System Environment/Libraries
@@ -15,8 +15,8 @@ URL:		http://freedesktop.org/wiki/Software/vaapi
 # 5. re-tar
 # original tarball at URL: http://cgit.freedesktop.org/libva/snapshot/libva-%{version}.tar.bz2
 Source0:	libva-%{version}-mod.tar.bz2
-# From sds: don't install test programs
-Patch0:		101_dont_install_test_programs.patch
+# Use merged patch
+Patch0:		libva-1.0.13-backport.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:	libtool
 BuildRequires:	libudev-devel
@@ -86,8 +86,15 @@ rm -rf %{buildroot}
 %files utils
 %defattr(-,root,root,-)
 %{_bindir}/vainfo
+%{_bindir}/avcenc
+%{_bindir}/h264encode
+%{_bindir}/mpeg2vldemo
+%{_bindir}/putsurface
 
 %changelog
+* Wed Jun 08 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.0.13-1
+- Update to 1.0.13
+
 * Fri Apr 08 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.0.12-1
 - Update to 1.0.12
 
