@@ -1,6 +1,6 @@
 Name:		libva
 Version:	1.0.13
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 Group:		System Environment/Libraries
 License:	MIT
@@ -44,6 +44,7 @@ developing applications that use %{name}.
 %package	utils
 Summary:	Tools for %{name} (including vainfo)
 Group:		Development/Libraries
+Requires:	%{name} = %{version}-%{release}
 
 %description	utils
 The %{name}-utils package contains tools that are provided as part
@@ -93,6 +94,9 @@ rm -rf %{buildroot}
 %{_bindir}/putsurface
 
 %changelog
+* Fri Jun 10 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.0.13-2
+- Add versioned requirement between main/utils
+
 * Wed Jun 08 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.0.13-1
 - Update to 1.0.13
 
