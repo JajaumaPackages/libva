@@ -1,6 +1,6 @@
 Name:		libva
-Version:	1.0.13
-Release:	2%{?dist}
+Version:	1.0.14
+Release:	1%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 Group:		System Environment/Libraries
 License:	MIT
@@ -15,10 +15,8 @@ URL:		http://freedesktop.org/wiki/Software/vaapi
 # 5. re-tar
 # original tarball at URL: http://cgit.freedesktop.org/libva/snapshot/libva-%{version}.tar.bz2
 Source0:	libva-%{version}-mod.tar.bz2
-# Use merged patch
-Patch0:		libva-1.0.13-backport.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires:	libtool
+#BuildRequires:	libtool
 BuildRequires:	libudev-devel
 BuildRequires:	libXext-devel
 BuildRequires:	libXfixes-devel
@@ -53,10 +51,8 @@ of %{name}, including the vainfo tool for determining what (if any)
 
 %prep
 %setup -q -n %{name}-%{version}-mod
-%patch0 -p1 -b .testprogs
 
 %build
-autoreconf -i
 %configure --disable-static --enable-glx
 make %{?_smp_mflags}
 
@@ -94,6 +90,9 @@ rm -rf %{buildroot}
 %{_bindir}/putsurface
 
 %changelog
+* Sun Aug 07 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.0.14-1
+- Update to 1.0.14
+
 * Fri Jun 10 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.0.13-2
 - Add versioned requirement between main/utils
 
