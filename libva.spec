@@ -1,22 +1,13 @@
 Name:		libva
-Version:	1.0.14
+Version:	1.0.15
 Release:	1%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 Group:		System Environment/Libraries
 License:	MIT
 URL:		http://freedesktop.org/wiki/Software/vaapi
-# Tarball is modified to remove the i965 driver, which legal considers
-# potentially problematic from a patent POV. Procedure to generate the
-# modified tarball:
-# 1. extract
-# 2. remove all i965 references in configure.ac and Makefile.am
-# 3. autoreconf -i
-# 4. rm -rf i965_drv_video
-# 5. re-tar
-# original tarball at URL: http://cgit.freedesktop.org/libva/snapshot/libva-%{version}.tar.bz2
-Source0:	libva-%{version}-mod.tar.bz2
+Source0:	http://cgit.freedesktop.org/libva/snapshot/libva-%{version}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-#BuildRequires:	libtool
+BuildRequires:	libtool
 BuildRequires:	libudev-devel
 BuildRequires:	libXext-devel
 BuildRequires:	libXfixes-devel
@@ -50,9 +41,10 @@ of %{name}, including the vainfo tool for determining what (if any)
 %{name} support is available on a system.
 
 %prep
-%setup -q -n %{name}-%{version}-mod
+%setup -q
 
 %build
+autoreconf -vif
 %configure --disable-static --enable-glx
 make %{?_smp_mflags}
 
@@ -90,6 +82,10 @@ rm -rf %{buildroot}
 %{_bindir}/putsurface
 
 %changelog
+* Thu Nov 03 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.0.15-1
+- Update to 1.0.15
+- Back to vanilla upstream sources - no backend are provided anymore
+
 * Sun Aug 07 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.0.14-1
 - Update to 1.0.14
 
