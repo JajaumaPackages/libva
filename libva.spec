@@ -15,6 +15,7 @@ BuildRequires:	libdrm-devel
 BuildRequires:  libpciaccess-devel
 BuildRequires:	mesa-libEGL-devel
 BuildRequires:	mesa-libGL-devel
+BuildRequires:	mesa-libGLES-devel
 # owns the %{_libdir}/dri directory
 Requires:	mesa-dri-drivers
 
