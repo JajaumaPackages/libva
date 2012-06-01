@@ -1,6 +1,6 @@
 Name:		libva
-Version:	1.0.15
-Release:	2%{?dist}
+Version:	1.1.0
+Release:	1%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 Group:		System Environment/Libraries
 License:	MIT
@@ -13,6 +13,7 @@ BuildRequires:	libXext-devel
 BuildRequires:	libXfixes-devel
 BuildRequires:	libdrm-devel
 BuildRequires:  libpciaccess-devel
+BuildRequires:	mesa-libEGL-devel
 BuildRequires:	mesa-libGL-devel
 # owns the %{_libdir}/dri directory
 Requires:	mesa-dri-drivers
@@ -76,12 +77,17 @@ rm -rf %{buildroot}
 %files utils
 %defattr(-,root,root,-)
 %{_bindir}/vainfo
+%{_bindir}/loadjpeg
+%{_bindir}/va_egl
 %{_bindir}/avcenc
 %{_bindir}/h264encode
 %{_bindir}/mpeg2vldemo
 %{_bindir}/putsurface
 
 %changelog
+* Fri Jun 01 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.1.0-1
+- Update to 1.1.0 - VA-API version 0.33.0
+
 * Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0.15-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
