@@ -1,6 +1,6 @@
 Name:		libva
 Version:	1.1.0
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 Group:		System Environment/Libraries
 License:	MIT
@@ -86,6 +86,9 @@ rm -rf %{buildroot}
 %{_bindir}/putsurface
 
 %changelog
+* Thu Jul 19 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.1.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+
 * Fri Jun 01 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.1.0-1
 - Update to 1.1.0 - VA-API version 0.33.0
 
