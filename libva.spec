@@ -1,3 +1,8 @@
+%if 0%{fedora} >= 18
+%global _with_wayland 1
+%endif
+
+
 Name:		libva
 Version:	1.1.0
 Release:	3%{?dist}
@@ -6,8 +11,7 @@ Group:		System Environment/Libraries
 License:	MIT
 URL:		http://freedesktop.org/wiki/Software/vaapi
 Source0:	http://www.freedesktop.org/software/vaapi/releases/libva/libva-%{version}.tar.bz2
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires:	libtool
+
 BuildRequires:	libudev-devel
 BuildRequires:	libXext-devel
 BuildRequires:	libXfixes-devel
@@ -16,6 +20,11 @@ BuildRequires:  libpciaccess-devel
 BuildRequires:	mesa-libEGL-devel
 BuildRequires:	mesa-libGL-devel
 BuildRequires:	mesa-libGLES-devel
+%{?_with_wayland:
+BuildRequires:  wayland-devel
+BuildRequires:  pkgconfig(wayland-client) >= 0.95
+BuildRequires:  pkgconfig(wayland-server) >= 0.95
+}
 # owns the %{_libdir}/dri directory
 Requires:	mesa-dri-drivers
 
@@ -25,7 +34,8 @@ Libva is a library providing the VA API video acceleration API.
 %package	devel
 Summary:	Development files for %{name}
 Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}%{_isa} = %{version}-%{release}
+Requires:	%{name}-wayland%{_isa} = %{version}-%{release}
 Requires:	pkgconfig
 
 %description	devel
@@ -35,59 +45,80 @@ developing applications that use %{name}.
 %package	utils
 Summary:	Tools for %{name} (including vainfo)
 Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}%{_isa} = %{version}-%{release}
 
 %description	utils
 The %{name}-utils package contains tools that are provided as part
 of %{name}, including the vainfo tool for determining what (if any)
 %{name} support is available on a system.
 
+%{?_with_wayland:
+%package	wayland
+Summary:	Wayland support for VA API
+Group:		System Environment/Libraries
+Requires:	%{name}%{_isa} = %{version}-%{release}
+
+%description	wayland
+The %{name}-wayland package contains libraries that are provided as part
+of %{name}, to use with wayland.
+}
+
 %prep
 %setup -q
 
 %build
-autoreconf -vif
-%configure --disable-static --enable-glx
+%configure --disable-static \
+  --enable-glx \
+%{?_with_wayland:--enable-wayland}
+
+# remove rpath from libtool
+sed -i.rpath 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+sed -i.rpath 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+
 make %{?_smp_mflags}
 
 %install
-rm -rf %{buildroot}
 make install DESTDIR=%{buildroot} INSTALL="install -p"
 find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 
-%clean
-rm -rf %{buildroot}
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files
-%defattr(-,root,root,-)
 %doc COPYING
+%{?_with_wayland:
+%exclude %{_libdir}/libva-wayland.so.*
+}
 %{_libdir}/libva*.so.*
 # Keep these specific: if any new real drivers start showing up
 # in libva, we need to know about it so they can be patent-audited
 %{_libdir}/dri/dummy_drv_video.so
 
 %files devel
-%defattr(-,root,root,-)
 %{_includedir}/va
 %{_libdir}/libva*.so
 %{_libdir}/pkgconfig/libva*.pc
 
 %files utils
-%defattr(-,root,root,-)
 %{_bindir}/vainfo
 %{_bindir}/loadjpeg
-%{_bindir}/va_egl
 %{_bindir}/avcenc
 %{_bindir}/h264encode
 %{_bindir}/mpeg2vldemo
 %{_bindir}/putsurface
 
+%{?_with_wayland:
+%files wayland
+%{_libdir}/libva-wayland.so.*
+%{_bindir}/putsurface_wayland
+}
+
 %changelog
 * Sat Oct 06 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.1.0-3
 - Update to official 1.1.0 release
+- Enable Wayland support on f18 - add subpackage
+- Clean spec file
 
 * Thu Jul 19 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.1.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
