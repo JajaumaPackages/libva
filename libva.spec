@@ -1,11 +1,11 @@
 Name:		libva
 Version:	1.1.0
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 Group:		System Environment/Libraries
 License:	MIT
 URL:		http://freedesktop.org/wiki/Software/vaapi
-Source0:	http://cgit.freedesktop.org/libva/snapshot/libva-%{version}.tar.bz2
+Source0:	http://www.freedesktop.org/software/vaapi/releases/libva/libva-%{version}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:	libtool
 BuildRequires:	libudev-devel
@@ -86,6 +86,9 @@ rm -rf %{buildroot}
 %{_bindir}/putsurface
 
 %changelog
+* Sat Oct 06 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.1.0-3
+- Update to official 1.1.0 release
+
 * Thu Jul 19 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.1.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
