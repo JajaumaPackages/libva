@@ -1,11 +1,11 @@
-%if 0%{fedora} >= 18
+%if 0%{?fedora} >= 18
 %global _with_wayland 1
 %endif
 
 
 Name:		libva
 Version:	1.1.0
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 Group:		System Environment/Libraries
 License:	MIT
@@ -35,7 +35,9 @@ Libva is a library providing the VA API video acceleration API.
 Summary:	Development files for %{name}
 Group:		Development/Libraries
 Requires:	%{name}%{_isa} = %{version}-%{release}
-Requires:	%{name}-wayland%{_isa} = %{version}-%{release}
+%{?_with_wayland:
+Requires: %{name}-wayland%{_isa} = %{version}-%{release}
+}
 Requires:	pkgconfig
 
 %description	devel
@@ -115,6 +117,9 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 }
 
 %changelog
+* Thu Nov 15 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.1.0-4
+- Fix condition rhbz#877059
+
 * Sat Oct 06 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.1.0-3
 - Update to official 1.1.0 release
 - Enable Wayland support on f18 - add subpackage
