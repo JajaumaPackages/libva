@@ -1,11 +1,6 @@
-%if 0%{?fedora} >= 18
-%global _with_wayland 1
-%endif
-
-
 Name:		libva
 Version:	1.1.0
-Release:	4%{?dist}
+Release:	5%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 Group:		System Environment/Libraries
 License:	MIT
@@ -24,6 +19,9 @@ BuildRequires:	mesa-libGLES-devel
 BuildRequires:  wayland-devel
 BuildRequires:  pkgconfig(wayland-client) >= 0.95
 BuildRequires:  pkgconfig(wayland-server) >= 0.95
+}
+%{!?_with_wayland:
+Obsoletes:  %{name}-wayland < %{version}-%{release}
 }
 # owns the %{_libdir}/dri directory
 Requires:	mesa-dri-drivers
@@ -117,6 +115,10 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 }
 
 %changelog
+* Tue Nov 20 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.1.0-5
+- Drop wayland support - Lead to suspicious crash
+  to reintroduce later using alternates build for vainfo and libs.
+
 * Thu Nov 15 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.1.0-4
 - Fix condition rhbz#877059
 
