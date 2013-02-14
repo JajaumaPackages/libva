@@ -1,6 +1,6 @@
 Name:		libva
 Version:	1.1.0
-Release:	5%{?dist}
+Release:	6%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 Group:		System Environment/Libraries
 License:	MIT
@@ -115,6 +115,9 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 }
 
 %changelog
+* Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.1.0-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
+
 * Tue Nov 20 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.1.0-5
 - Drop wayland support - Lead to suspicious crash
   to reintroduce later using alternates build for vainfo and libs.
