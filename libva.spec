@@ -1,6 +1,6 @@
 Name:		libva
-Version:	1.1.0
-Release:	6%{?dist}
+Version:	1.1.1
+Release:	1%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 Group:		System Environment/Libraries
 License:	MIT
@@ -17,8 +17,8 @@ BuildRequires:	mesa-libGL-devel
 BuildRequires:	mesa-libGLES-devel
 %{?_with_wayland:
 BuildRequires:  wayland-devel
-BuildRequires:  pkgconfig(wayland-client) >= 0.95
-BuildRequires:  pkgconfig(wayland-server) >= 0.95
+BuildRequires:  pkgconfig(wayland-client) >= 1
+BuildRequires:  pkgconfig(wayland-server) >= 1
 }
 %{!?_with_wayland:
 Obsoletes:  %{name}-wayland < %{version}-%{release}
@@ -115,6 +115,9 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 }
 
 %changelog
+* Wed Mar 20 2013 Nicolas Chauvet <kwizart@gmail.com> - 1.1.1-1
+- Update to 1.1.1
+
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.1.0-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 
