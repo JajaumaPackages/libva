@@ -1,6 +1,6 @@
 Name:		libva
 Version:	1.1.1
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 Group:		System Environment/Libraries
 License:	MIT
@@ -24,7 +24,7 @@ BuildRequires:  pkgconfig(wayland-server) >= 1
 Obsoletes:  %{name}-wayland < %{version}-%{release}
 }
 # owns the %{_libdir}/dri directory
-Requires:	mesa-dri-drivers
+Requires:	mesa-dri-filesystem
 
 %description
 Libva is a library providing the VA API video acceleration API.
@@ -115,6 +115,9 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 }
 
 %changelog
+* Fri Apr 12 2013 Nicolas Chauvet <kwizart@gmail.com> - 1.1.1-2
+- Switch Requires to mesa-dri-filesystem
+
 * Wed Mar 20 2013 Nicolas Chauvet <kwizart@gmail.com> - 1.1.1-1
 - Update to 1.1.1
 
