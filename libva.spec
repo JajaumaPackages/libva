@@ -1,6 +1,6 @@
 Name:		libva
-Version:	1.1.1
-Release:	2%{?dist}
+Version:	1.2.0
+Release:	1%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 Group:		System Environment/Libraries
 License:	MIT
@@ -115,6 +115,9 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 }
 
 %changelog
+* Wed Jun 26 2013 Nicolas Chauvet <kwizart@gmail.com> - 1.2.0-1
+- Update to 1.2.0
+
 * Fri Apr 12 2013 Nicolas Chauvet <kwizart@gmail.com> - 1.1.1-2
 - Switch Requires to mesa-dri-filesystem
 
