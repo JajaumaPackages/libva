@@ -106,6 +106,7 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 %{_bindir}/avcenc
 %{_bindir}/h264encode
 %{_bindir}/mpeg2vldemo
+%exclude %{_bindir}/mpeg2enc
 %{_bindir}/putsurface
 
 %{?_with_wayland:
@@ -117,6 +118,7 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 %changelog
 * Wed Jun 26 2013 Nicolas Chauvet <kwizart@gmail.com> - 1.2.0-1
 - Update to 1.2.0
+- Exclude mpeg2enc for now - namespace clash
 
 * Fri Apr 12 2013 Nicolas Chauvet <kwizart@gmail.com> - 1.1.1-2
 - Switch Requires to mesa-dri-filesystem
