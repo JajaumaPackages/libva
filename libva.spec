@@ -1,5 +1,5 @@
 Name:		libva
-Version:	1.2.0
+Version:	1.2.1
 Release:	1%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 Group:		System Environment/Libraries
@@ -106,7 +106,7 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 %{_bindir}/avcenc
 %{_bindir}/h264encode
 %{_bindir}/mpeg2vldemo
-%exclude %{_bindir}/mpeg2enc
+%{_bindir}/mpeg2vaenc
 %{_bindir}/putsurface
 
 %{?_with_wayland:
@@ -116,6 +116,10 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 }
 
 %changelog
+* Thu Jun 27 2013 Nicolas Chauvet <kwizart@gmail.com> - 1.2.1-1
+- Update to 1.2.1
+- Add mpeg2vaenc
+
 * Wed Jun 26 2013 Nicolas Chauvet <kwizart@gmail.com> - 1.2.0-1
 - Update to 1.2.0
 - Exclude mpeg2enc for now - namespace clash
