@@ -1,6 +1,6 @@
 Name:		libva
 Version:	1.2.1
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 Group:		System Environment/Libraries
 License:	MIT
@@ -116,6 +116,9 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 }
 
 %changelog
+* Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.2.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
+
 * Thu Jun 27 2013 Nicolas Chauvet <kwizart@gmail.com> - 1.2.1-1
 - Update to 1.2.1
 - Add mpeg2vaenc
