@@ -1,6 +1,6 @@
 Name:		libva
-Version:	1.2.1
-Release:	2%{?dist}
+Version:	1.3.0
+Release:	1%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 Group:		System Environment/Libraries
 License:	MIT
@@ -15,13 +15,11 @@ BuildRequires:  libpciaccess-devel
 BuildRequires:	mesa-libEGL-devel
 BuildRequires:	mesa-libGL-devel
 BuildRequires:	mesa-libGLES-devel
-%{?_with_wayland:
+%{!?_without_wayland:
 BuildRequires:  wayland-devel
 BuildRequires:  pkgconfig(wayland-client) >= 1
+BuildRequires:  pkgconfig(wayland-scanner) >= 1
 BuildRequires:  pkgconfig(wayland-server) >= 1
-}
-%{!?_with_wayland:
-Obsoletes:  %{name}-wayland < %{version}-%{release}
 }
 # owns the %{_libdir}/dri directory
 Requires:	mesa-dri-filesystem
@@ -33,9 +31,6 @@ Libva is a library providing the VA API video acceleration API.
 Summary:	Development files for %{name}
 Group:		Development/Libraries
 Requires:	%{name}%{_isa} = %{version}-%{release}
-%{?_with_wayland:
-Requires: %{name}-wayland%{_isa} = %{version}-%{release}
-}
 Requires:	pkgconfig
 
 %description	devel
@@ -52,16 +47,6 @@ The %{name}-utils package contains tools that are provided as part
 of %{name}, including the vainfo tool for determining what (if any)
 %{name} support is available on a system.
 
-%{?_with_wayland:
-%package	wayland
-Summary:	Wayland support for VA API
-Group:		System Environment/Libraries
-Requires:	%{name}%{_isa} = %{version}-%{release}
-
-%description	wayland
-The %{name}-wayland package contains libraries that are provided as part
-of %{name}, to use with wayland.
-}
 
 %prep
 %setup -q
@@ -69,7 +54,7 @@ of %{name}, to use with wayland.
 %build
 %configure --disable-static \
   --enable-glx \
-%{?_with_wayland:--enable-wayland}
+%{?_without_wayland:--disable-wayland}
 
 # remove rpath from libtool
 sed -i.rpath 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -87,9 +72,6 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 
 %files
 %doc COPYING
-%{?_with_wayland:
-%exclude %{_libdir}/libva-wayland.so.*
-}
 %{_libdir}/libva*.so.*
 # Keep these specific: if any new real drivers start showing up
 # in libva, we need to know about it so they can be patent-audited
@@ -108,14 +90,13 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 %{_bindir}/mpeg2vldemo
 %{_bindir}/mpeg2vaenc
 %{_bindir}/putsurface
-
-%{?_with_wayland:
-%files wayland
-%{_libdir}/libva-wayland.so.*
-%{_bindir}/putsurface_wayland
-}
+%{!?_without_wayland:%{_bindir}/putsurface_wayland}
 
 %changelog
+* Tue Apr 08 2014 Nicolas Chauvet <kwizart@gmail.com> - 1.3.0-1
+- Update to 1.3.0
+- Enable wayland by default
+
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.2.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
