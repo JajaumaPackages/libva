@@ -1,5 +1,5 @@
 Name:		libva
-Version:	1.3.0
+Version:	1.3.1
 Release:	1%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 Group:		System Environment/Libraries
@@ -93,6 +93,9 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 %{!?_without_wayland:%{_bindir}/putsurface_wayland}
 
 %changelog
+* Tue May 13 2014 Nicolas Chauvet <kwizart@gmail.com> - 1.3.1-1
+- Update to 1.3.1
+
 * Tue Apr 08 2014 Nicolas Chauvet <kwizart@gmail.com> - 1.3.0-1
 - Update to 1.3.0
 - Enable wayland by default
