@@ -1,6 +1,6 @@
 Name:		libva
 Version:	1.3.1
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 Group:		System Environment/Libraries
 License:	MIT
@@ -95,6 +95,9 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 %{!?_without_wayland:%{_bindir}/putsurface_wayland}
 
 %changelog
+* Sun Aug 17 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.3.1-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
+
 * Fri Jun 20 2014 Elad Alfassa <elad@fedoraproject.org> - 1.3.1-3
 - Apply upstream patch to fix a firefox crash (rhbz #1105890)
 
