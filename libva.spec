@@ -1,12 +1,11 @@
 Name:		libva
-Version:	1.3.1
-Release:	4%{?dist}
+Version:	1.4.0
+Release:	1%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 Group:		System Environment/Libraries
 License:	MIT
 URL:		http://freedesktop.org/wiki/Software/vaapi
 Source0:	http://www.freedesktop.org/software/vaapi/releases/libva/libva-%{version}.tar.bz2
-Patch0:	firefox-crash-fix.patch
 
 BuildRequires:	libudev-devel
 BuildRequires:	libXext-devel
@@ -51,7 +50,6 @@ of %{name}, including the vainfo tool for determining what (if any)
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %configure --disable-static \
@@ -95,6 +93,9 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 %{!?_without_wayland:%{_bindir}/putsurface_wayland}
 
 %changelog
+* Wed Oct  8 2014 Simon Farnsworth <simon.farnsworth@onelan.co.uk> - 1.4.0-1
+- Update to 1.4.0
+
 * Sun Aug 17 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.3.1-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
