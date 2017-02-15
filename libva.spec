@@ -1,11 +1,12 @@
 Name:		libva
 Version:	1.7.3
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 Group:		System Environment/Libraries
 License:	MIT
 URL:		http://freedesktop.org/wiki/Software/vaapi
 Source0:	http://www.freedesktop.org/software/vaapi/releases/libva/libva-%{version}.tar.bz2
+Patch0:		libva-1.7.3-glvnd-fix.patch
 
 BuildRequires:	libudev-devel
 BuildRequires:	libXext-devel
@@ -49,7 +50,7 @@ of %{name}, including the vainfo tool for determining what (if any)
 
 
 %prep
-%setup -q
+%autosetup -p1
 
 %build
 %configure --disable-static \
@@ -71,7 +72,7 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 %postun -p /sbin/ldconfig
 
 %files
-%doc COPYING
+%license COPYING
 %{_libdir}/libva*.so.*
 # Keep these specific: if any new real drivers start showing up
 # in libva, we need to know about it so they can be patent-audited
@@ -94,6 +95,9 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 %{!?_without_wayland:%{_bindir}/putsurface_wayland}
 
 %changelog
+* Wed Feb 15 2017 Hans de Goede <hdegoede@redhat.com> - 1.7.3-3
+- Fix libva not working when using with libglvnd + wayland (rhbz#1422151)
+
 * Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.7.3-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
