@@ -1,12 +1,12 @@
 Name:		libva
-Version:	1.7.3
-Release:	3%{?dist}
+Version:	1.8.0
+Release:	1%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
-Group:		System Environment/Libraries
 License:	MIT
-URL:		http://freedesktop.org/wiki/Software/vaapi
-Source0:	http://www.freedesktop.org/software/vaapi/releases/libva/libva-%{version}.tar.bz2
-Patch0:		libva-1.7.3-glvnd-fix.patch
+URL:		https://01.org/linuxmedia
+Source0:	https://github.com/01org/libva/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+
+BuildRequires:  libtool
 
 BuildRequires:	libudev-devel
 BuildRequires:	libXext-devel
@@ -30,7 +30,6 @@ Libva is a library providing the VA API video acceleration API.
 
 %package	devel
 Summary:	Development files for %{name}
-Group:		Development/Libraries
 Requires:	%{name}%{_isa} = %{version}-%{release}
 Requires:	pkgconfig
 
@@ -38,19 +37,10 @@ Requires:	pkgconfig
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
-%package	utils
-Summary:	Tools for %{name} (including vainfo)
-Group:		Development/Libraries
-Requires:	%{name}%{_isa} = %{version}-%{release}
-
-%description	utils
-The %{name}-utils package contains tools that are provided as part
-of %{name}, including the vainfo tool for determining what (if any)
-%{name} support is available on a system.
-
 
 %prep
 %autosetup -p1
+autoreconf -vif
 
 %build
 %configure --disable-static \
@@ -61,10 +51,10 @@ of %{name}, including the vainfo tool for determining what (if any)
 sed -i.rpath 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i.rpath 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 
-make %{?_smp_mflags}
+%make_build
 
 %install
-make install DESTDIR=%{buildroot} INSTALL="install -p"
+%make_install INSTALL="install -p"
 find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 
 
@@ -83,18 +73,13 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 %{_libdir}/libva*.so
 %{_libdir}/pkgconfig/libva*.pc
 
-%files utils
-%{_bindir}/vainfo
-%{_bindir}/loadjpeg
-%{_bindir}/jpegenc
-%{_bindir}/avcenc
-%{_bindir}/h264encode
-%{_bindir}/mpeg2vldemo
-%{_bindir}/mpeg2vaenc
-%{_bindir}/putsurface
-%{!?_without_wayland:%{_bindir}/putsurface_wayland}
-
 %changelog
+* Fri Mar 31 2017 Nicolas Chauvet <kwizart@gmail.com> - 1.8.0-1
+- Update to 1.8.0
+- Switch upstream URL to 01.org and github
+- Split libva-utils into it's own package
+- Clean-up groups
+
 * Wed Feb 15 2017 Hans de Goede <hdegoede@redhat.com> - 1.7.3-3
 - Fix libva not working when using with libglvnd + wayland (rhbz#1422151)
 
