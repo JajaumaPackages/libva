@@ -1,5 +1,5 @@
 Name:		libva
-Version:	1.8.0
+Version:	1.8.1
 Release:	1%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 License:	MIT
@@ -74,6 +74,9 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 %{_libdir}/pkgconfig/libva*.pc
 
 %changelog
+* Mon Apr 10 2017 Nicolas Chauvet <kwizart@gmail.com> - 1.8.1-1
+- Update to 1.8.1
+
 * Fri Mar 31 2017 Nicolas Chauvet <kwizart@gmail.com> - 1.8.0-1
 - Update to 1.8.0
 - Switch upstream URL to 01.org and github
