@@ -64,9 +64,6 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 %files
 %license COPYING
 %{_libdir}/libva*.so.*
-# Keep these specific: if any new real drivers start showing up
-# in libva, we need to know about it so they can be patent-audited
-%{_libdir}/dri/dummy_drv_video.so
 
 %files devel
 %{_includedir}/va
@@ -76,6 +73,7 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 %changelog
 * Wed Jul 12 2017 Nicolas Chauvet <kwizart@gmail.com> - 1.8.3-1
 - Update to 1.8.3
+- Remove dummy driver
 
 * Tue May 23 2017 Nicolas Chauvet <kwizart@gmail.com> - 1.8.2-1
 - Update to 1.8.2
