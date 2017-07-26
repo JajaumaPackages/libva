@@ -1,6 +1,6 @@
 Name:		libva
 Version:	1.8.3
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 License:	MIT
 URL:		https://01.org/linuxmedia
@@ -71,6 +71,9 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 %{_libdir}/pkgconfig/libva*.pc
 
 %changelog
+* Wed Jul 26 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.8.3-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
+
 * Wed Jul 12 2017 Nicolas Chauvet <kwizart@gmail.com> - 1.8.3-1
 - Update to 1.8.3
 - Remove dummy driver
