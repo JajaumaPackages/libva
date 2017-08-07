@@ -1,6 +1,12 @@
+%if 0%{?rhel}
+%global with_wayland 0
+%else # %%{?rhel}
+%global with_wayland 1
+%endif # %%{?rhel}
+
 Name:		libva
 Version:	1.8.3
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 License:	MIT
 URL:		https://01.org/linuxmedia
@@ -16,12 +22,12 @@ BuildRequires:  libpciaccess-devel
 BuildRequires:	mesa-libEGL-devel
 BuildRequires:	mesa-libGL-devel
 BuildRequires:	mesa-libGLES-devel
-%{!?_without_wayland:
+%if 0%{with_wayland}
 BuildRequires:  wayland-devel
 BuildRequires:  pkgconfig(wayland-client) >= 1
 BuildRequires:  pkgconfig(wayland-scanner) >= 1
 BuildRequires:  pkgconfig(wayland-server) >= 1
-}
+%endif
 # owns the %{_libdir}/dri directory
 Requires:	mesa-dri-filesystem
 
@@ -45,7 +51,9 @@ autoreconf -vif
 %build
 %configure --disable-static \
   --enable-glx \
-%{?_without_wayland:--disable-wayland}
+%if !0%{with_wayland}
+  --disable-wayland
+%endif
 
 # remove rpath from libtool
 sed -i.rpath 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -71,6 +79,9 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 %{_libdir}/pkgconfig/libva*.pc
 
 %changelog
+* Mon Aug 07 2017 Jajauma's Packages <jajauma@yandex.ru> - 1.8.3-4
+- Disable wayland support on RHEL
+
 * Thu Aug 03 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.8.3-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 
