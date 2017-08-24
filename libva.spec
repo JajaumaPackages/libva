@@ -1,6 +1,6 @@
 Name:		libva
 Version:	1.8.3
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 License:	MIT
 URL:		https://01.org/linuxmedia
@@ -62,7 +62,9 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 %postun -p /sbin/ldconfig
 
 %files
+%doc NEWS
 %license COPYING
+%ghost %{_sysconfdir}/libva.conf
 %{_libdir}/libva*.so.*
 
 %files devel
@@ -71,6 +73,9 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 %{_libdir}/pkgconfig/libva*.pc
 
 %changelog
+* Thu Aug 24 2017 Nicolas Chauvet <kwizart@gmail.com> - 1.8.3-4
+- Owns /etc/libva.conf and add NEWS in doc
+
 * Thu Aug 03 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.8.3-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 
