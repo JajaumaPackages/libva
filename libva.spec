@@ -6,7 +6,7 @@ License:	MIT
 URL:		https://01.org/linuxmedia
 Source0:	https://github.com/01org/libva/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
-BuildRequires:  libtool
+BuildRequires:	libtool
 
 BuildRequires:	libudev-devel
 BuildRequires:	libXext-devel
@@ -22,7 +22,7 @@ BuildRequires:  pkgconfig(wayland-client) >= 1
 BuildRequires:  pkgconfig(wayland-scanner) >= 1
 BuildRequires:  pkgconfig(wayland-server) >= 1
 }
-# owns the %{_libdir}/dri directory
+# owns the %%{_libdir}/dri directory
 Requires:	mesa-dri-filesystem
 
 %description
