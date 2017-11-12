@@ -1,18 +1,16 @@
 %if 0%{?rhel}
-%global with_wayland 0
-%else # %%{?rhel}
-%global with_wayland 1
-%endif # %%{?rhel}
+%global _without_wayland 1
+%endif
 
 Name:		libva
 Version:	1.8.3
-Release:	4%{?dist}
+Release:	5%{?dist}
 Summary:	Video Acceleration (VA) API for Linux
 License:	MIT
 URL:		https://01.org/linuxmedia
 Source0:	https://github.com/01org/libva/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
-BuildRequires:  libtool
+BuildRequires:	libtool
 
 BuildRequires:	libudev-devel
 BuildRequires:	libXext-devel
@@ -22,13 +20,13 @@ BuildRequires:  libpciaccess-devel
 BuildRequires:	mesa-libEGL-devel
 BuildRequires:	mesa-libGL-devel
 BuildRequires:	mesa-libGLES-devel
-%if 0%{with_wayland}
+%{!?_without_wayland:
 BuildRequires:  wayland-devel
 BuildRequires:  pkgconfig(wayland-client) >= 1
 BuildRequires:  pkgconfig(wayland-scanner) >= 1
 BuildRequires:  pkgconfig(wayland-server) >= 1
-%endif
-# owns the %{_libdir}/dri directory
+}
+# owns the %%{_libdir}/dri directory
 Requires:	mesa-dri-filesystem
 
 %description
@@ -51,9 +49,7 @@ autoreconf -vif
 %build
 %configure --disable-static \
   --enable-glx \
-%if !0%{with_wayland}
-  --disable-wayland
-%endif
+%{?_without_wayland:--disable-wayland}
 
 # remove rpath from libtool
 sed -i.rpath 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -70,7 +66,9 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 %postun -p /sbin/ldconfig
 
 %files
+%doc NEWS
 %license COPYING
+%ghost %{_sysconfdir}/libva.conf
 %{_libdir}/libva*.so.*
 
 %files devel
@@ -79,8 +77,11 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 %{_libdir}/pkgconfig/libva*.pc
 
 %changelog
-* Mon Aug 07 2017 Jajauma's Packages <jajauma@yandex.ru> - 1.8.3-4
+* Sun Nov 12 2017 Jajauma's Packages <jajauma@yandex.ru> - 1.8.3-5
 - Disable wayland support on RHEL
+
+* Thu Aug 24 2017 Nicolas Chauvet <kwizart@gmail.com> - 1.8.3-4
+- Owns /etc/libva.conf and add NEWS in doc
 
 * Thu Aug 03 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.8.3-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
